@@ -28,6 +28,10 @@ STATE_PASSWORD=01234567890123456789012345678901
 ORIGINS=https://utteranc.es,http://localhost:9000
 ```
 
+## dev
+
+The following `package.json` script needs to be updated to have your name and domain: https://github.com/Christopher-Hayes/utterances-oauth/blob/master/package.json#L9
+
 ## run locally
 
 ```
