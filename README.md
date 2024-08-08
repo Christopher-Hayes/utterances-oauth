@@ -1,55 +1,70 @@
 # utterances-oauth
 
-This repo contains the source for the [Cloudflare Worker](https://developers.cloudflare.com/workers/) that powers the GitHub OAuth flow and issue creation for Utterances.
+This repository contains the source code for a [Cloudflare Worker](https://developers.cloudflare.com/workers/) that handles the GitHub OAuth flow and issue creation for Utterances. This script is intended to be run in the Cloudflare Worker environment. For local debugging, you can use [cloudflare-worker-local](https://github.com/gja/cloudflare-worker-local).
 
-## install
+## Installation
 
-```
+To install the required packages, run:
+
+```bash
 yarn install
 ```
 
-## configuration
+## Configuration
 
-Create a file named `.env` at the root. File should have the following values:
+Create a `.env` file in the root directory with the following keys:
 
-- BOT_TOKEN: a personal access token that will be used when creating GitHub issues.
-- CLIENT_ID: The client id to be used in the [GitHub OAuth web application flow](https://developer.github.com/v3/oauth/#web-application-flow)
-- CLIENT_SECRET: The client secret for the OAuth web application flow
-- STATE_PASSWORD: 32 character password for encrypting state in request headers/cookies. Generate [here](https://lastpass.com/generatepassword.php).
-- ORIGINS: comma delimited list of permitted origins. For CORS.
+- **BOT_TOKEN**: A personal access token for creating GitHub issues.
+- **CLIENT_ID**: The client ID for the [GitHub OAuth web application flow](https://developer.github.com/v3/oauth/#web-application-flow).
+- **CLIENT_SECRET**: The client secret for the OAuth web application flow.
+- **STATE_PASSWORD**: A 32-character password for encrypting the state in request headers/cookies. Generate one [here](https://lastpass.com/generatepassword.php).
+- **ORIGINS**: A comma-delimited list of permitted origins for CORS.
 
-Example:
+### Example `.env` file
 
-```
-BOT_TOKEN=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-CLIENT_ID=aaaaaaaaaaaaaaaaaaaa
-CLIENT_SECRET=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-STATE_PASSWORD=01234567890123456789012345678901
+```plaintext
+BOT_TOKEN=your_bot_token_here
+CLIENT_ID=your_client_id_here
+CLIENT_SECRET=your_client_secret_here
+STATE_PASSWORD=your_32_character_password_here
 ORIGINS=https://utteranc.es,http://localhost:9000
 ```
 
-## dev
+## Development
 
-The following `package.json` script needs to be updated to have your name and domain: https://github.com/Christopher-Hayes/utterances-oauth/blob/master/package.json#L9
+To customize the deployment script based on your own configuration, update the `deploy` script in `package.json` with your Cloudflare Worker details. Modify the following parts:
 
-## run locally
+- **--name**: Replace `utteranc-es` with your desired worker name. This will be the identifier for your deployed Cloudflare Worker.
+- **--route**: Replace `'api.utteranc.es/*'` with your desired route. This specifies the domain and path where your Cloudflare Worker will be accessible.
 
+Here is the original script for reference:
+
+```json
+"deploy": "cfworker deploy --name utteranc-es --route 'api.utteranc.es/*' src/index.ts"
 ```
+
+## Running Locally
+
+To start the local development server, execute:
+
+```bash
 yarn run start
 ```
 
-## build
+## Build
 
-```
+To compile the project, run:
+
+```bash
 yarn run build
 ```
 
-## deploy
+## Deployment
 
-First add the necessary CLOUDFLARE\_\* entries to your .env file. See [@cfworker/dev README](https://www.npmjs.com/package/@cfworker/dev) for more information.
+Before deploying, ensure that your `.env` file contains the necessary `CLOUDFLARE_*` entries. Refer to the [@cfworker/dev README](https://www.npmjs.com/package/@cfworker/dev) for more details.
 
-Then execute:
+To deploy the application, execute:
 
-```
+```bash
 yarn run deploy
 ```
