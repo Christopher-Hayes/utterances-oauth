@@ -30,6 +30,16 @@ STATE_PASSWORD=your_32_character_password_here
 ORIGINS=https://utteranc.es,http://localhost:9000
 ```
 
+### Authorization Callback URL
+
+Your application's callback URL should be set to whatever the worker domain is plus `/authorized`. This is the URL where OAuth will redirect upon successful authorization. For example, if your worker is deployed at `https://api.utteranc.es`, the callback URL should be:
+
+```plaintext
+https://api.utteranc.es/authorized
+```
+
+For more information, read the [GitHub OAuth documentation](https://developer.github.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/).
+
 ## Development
 
 To customize the deployment script based on your own configuration, update the `deploy` script in `package.json` with your Cloudflare Worker details. Modify the following parts:
