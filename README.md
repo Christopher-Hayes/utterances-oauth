@@ -12,37 +12,24 @@ To install the required packages, run:
 yarn install
 ```
 
+## GitHub App Configuration
+
+1. Create a new GitHub App [here](https://github.com/settings/developers).
+2. Set the following fields:
+   - **Homepage URL**: `https://example.com`
+   - **User authorization callback URL**: `https://api.example.com/authorized`
+
 ## Configuration
 
-Create a `.env` file in the root directory with the following keys:
+Rename the `.env.sample` file to `.env` and fill in the following fields:
 
 - **BOT_TOKEN**: A personal access token for creating GitHub issues.
   - You can create a GitHub Personal Access Token (PAT) [over here](https://github.com/settings/personal-access-tokens/new).
-  - The permissions you need to provide are "Issues" with "Read and write" access.
+  - The permissions you need to provide are "Issues" with "Read and write" access. Ensure this token has access to the repositories you want to use.
 - **CLIENT_ID**: The client ID for the [GitHub OAuth web application flow](https://developer.github.com/v3/oauth/#web-application-flow).
 - **CLIENT_SECRET**: The client secret for the OAuth web application flow.
 - **STATE_PASSWORD**: A 32-character password for encrypting the state in request headers/cookies. Generate one [here](https://lastpass.com/generatepassword.php).
 - **ORIGINS**: A comma-delimited list of permitted origins for CORS.
-
-### Example `.env` file
-
-```plaintext
-BOT_TOKEN=your_bot_token_here
-CLIENT_ID=your_client_id_here
-CLIENT_SECRET=your_client_secret_here
-STATE_PASSWORD=your_32_character_password_here
-ORIGINS=https://example.com,http://localhost:9000
-```
-
-### Authorization Callback URL
-
-Your application's callback URL should be set to whatever the worker domain is plus `/authorized`. This is the URL where OAuth will redirect upon successful authorization. For example, if your worker is deployed at `https://api.example.com`, the callback URL should be:
-
-```plaintext
-https://api.example.com/authorized
-```
-
-For more information, read the [GitHub OAuth documentation](https://developer.github.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/).
 
 ## Development
 
